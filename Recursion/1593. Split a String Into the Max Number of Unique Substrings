@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int maxs=0;
+    set<string> temp;
+    void func(int ind,string sub,set<string>& temp,string s){
+        if(ind>=s.size()){
+                maxs=max(maxs,(int)temp.size());
+               return; 
+        }else{
+            sub.push_back(s[ind]);
+            func(ind+1,sub,temp,s);
+            if(temp.find(sub)==temp.end()){
+                temp.insert(sub);
+
+                func(ind+1,"",temp,s);
+                temp.erase(sub);
+            }
+            sub.pop_back();
+            return;
+        }
+    }
+    int maxUniqueSplit(string s) {
+        string sub;
+        func(0,sub,temp,s);
+        return maxs;
+    }
+};
