@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<string> ans;
+    string s;
+    void func(int ind,string temp,string sub,int dot){
+        if(ind>=s.size() && dot>0) return;
+        else if(ind<s.size() && dot<0){
+            return;
+        }else if(ind>=s.size()){
+            if(dot==0){
+                if(sub!="" && sub.size()<=3 && (sub=="0" || (sub[0]!='0' && stoi(sub)<=255))){
+                    temp+=sub;
+                    ans.push_back(temp);
+                }
+            }
+            return;
+        }else{
+            sub+=s[ind];
+            if(sub=="0" || sub.size()<=3 &&(sub[0]!='0' && stoi(sub)<=255)){
+                
+                func(ind+1,temp+sub+'.',"",dot-1);
+
+            }
+            func(ind+1,temp,sub,dot);
+        }
+    }
+    vector<string> restoreIpAddresses(string s1) {
+        s=s1;
+        func(0,"","",3);
+        return ans;
+    }
+};
