@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<int> ans;
+    void func(int len,int i,long long s){
+        len--;
+        s=s*10+i;
+        if(len==0){
+            ans.push_back(s);
+            return ;
+        }else if(len>0 && i>=9){
+            return;
+        }else if(len<0) return ;
+        else{
+            func(len,i+1,s);
+        }
+    }
+
+    vector<int> sequentialDigits(int low, int high) {
+        int d1=0,d2=0,low1=low,high1=high;
+        while(low1>0){
+            d1++;
+            low1/=10;
+        }
+        while(high1>0){
+            d2++;
+            high1/=10;
+        }
+        for(int d=d1;d<=d2;d++){
+            for(int i=1;i<=10-d;i++){
+                func(d,i,0);
+            }
+        }
+        vector<int> ans2;
+        for(int i=0;i<ans.size();i++){
+            if(ans[i]>=low  && ans[i]<=high) ans2.push_back(ans[i]);
+            
+        }
+        return ans2;
+        
+       
+        
+    }
+};
