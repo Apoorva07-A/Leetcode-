@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int func(int& letter,unordered_map<char,int>& mpp){
+        if(letter==mpp.size()){
+            return 1;
+        }else{
+            int sum=0;
+            for(auto it : mpp){
+                char ch= it.first;
+                if(mpp[ch]>0){
+                    mpp[ch]--;
+                    if(mpp[ch]==0) letter++;
+                    sum+=func(letter,mpp);
+                    if(mpp[ch]==0) letter--;
+                    mpp[ch]++;
+                }
+
+            }
+        return sum+1;
+        }
+    }
+    int numTilePossibilities(string s) {
+        unordered_map<char,int> mpp;
+        for(char a:s){
+            mpp[a]++;
+        }
+        int sum=0;
+        int letter=0;
+        for(auto it : mpp){
+            char ch= it.first;
+            if(mpp[ch]>0){
+                
+                    mpp[ch]--;
+                    if(mpp[ch]==0) letter++;
+                    sum+=func(letter,mpp);
+                    if(mpp[ch]==0) letter--;
+                    mpp[ch]++;
+            }
+
+        }
+        return sum;
+
+    }
+};
