@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int maxs=0;
+    bool ispossible(set<char> st,string s){
+        for(char a:s){
+            if(st.find(a)!=st.end()){
+
+                return false;
+            }else st.insert(a);
+        }
+        return true;
+    }
+    void func(int ind,vector<string>& arr,set<char>& st,string s){
+        if(ind>=arr.size()){
+            maxs=max(maxs,(int)s.size());
+            return;
+        }else{
+            func(ind+1,arr,st,s);
+            if(ispossible(st,arr[ind])){
+                s+=arr[ind];
+                for(char a:arr[ind]) st.insert(a);
+
+                func(ind+1,arr,st,s);
+                for(char a:arr[ind]) st.erase(a);
+                
+            }
+        }
+    }
+    int maxLength(vector<string>& arr) {
+        set<char> st;
+        string s;
+        func(0,arr,st,s);
+        return maxs;
+    }
+};
