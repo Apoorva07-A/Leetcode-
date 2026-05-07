@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string s;
+    vector<vector<string>> ans;
+    bool ispalindrome(string s2){
+        for(int i=0;i<s2.size()/2;i++){
+            if(s2[i]!=s2[s2.size()-1-i]) return false;
+        }
+        return true;
+    }
+    void func(int ind,vector<string>& temp,string sub){
+        if(ind>=s.size()){
+            if(sub=="") ans.push_back(temp);
+            return;
+        }else{
+            sub+=s[ind];
+            if(ispalindrome(sub)){
+                temp.push_back(sub);
+                func(ind+1,temp,"");
+                temp.pop_back();
+            }
+            func(ind+1,temp,sub);
+        }
+    }
+
+    vector<vector<string>> partition(string s1) {
+        s=s1;
+        vector<string> temp;
+        func(0,temp,"");
+        return ans;
+    }
+};
