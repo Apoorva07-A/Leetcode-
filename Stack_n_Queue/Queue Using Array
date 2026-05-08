@@ -1,0 +1,60 @@
+class myQueue {
+
+  public:
+  int start=-1;
+  int end=-1;
+  vector<int> arr;
+    myQueue(int n) {
+        // Define Data Structures
+        arr.resize(n,0);
+    }
+
+    bool isEmpty() {
+        // check if the queue is empty
+        if(start==-1 && end==-1) return true;
+        return false;
+    }
+
+    bool isFull() {
+        // check if the queue is full
+        if((end+1)%arr.size()==start) return true;
+        return false;
+    }
+
+    void enqueue(int x) {
+        // Adds an element x at the rear of the queue.
+        if(start==-1){
+            start++;end++;
+            arr[end]=x;
+        }
+        else if(!isFull()){
+            end=(end+1)%arr.size();
+            arr[end]=x;
+        }
+    }
+
+    void dequeue() {
+        // Removes the front element of the queue.
+        if(start==-1){
+            return;
+        }
+        else if(start==end){
+            start=-1;
+            end=-1;
+        }else{
+            start=(start+1)%arr.size();
+        }
+    }
+
+    int getFront() {
+        // Returns the front element of the queue.
+        if(isEmpty()) return -1;
+        else return arr[start];
+    }
+
+    int getRear() {
+        // Return the last element of queue
+        if(isEmpty()) return -1;
+        else return arr[end];
+    }
+};
