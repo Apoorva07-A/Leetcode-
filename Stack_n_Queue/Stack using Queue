@@ -1,0 +1,45 @@
+class myStack {
+    queue<int> q;
+    int len=0;
+
+  public:
+
+    void push(int x) {
+        // Inserts an element x at the top of the stack
+        if(len==0){
+            q.push(x);
+            len++;
+        }else{
+            q.push(x);
+            int n=len;
+            while(n){
+                int y=q.front();
+                q.push(y);
+                q.pop();
+                n--;
+            }
+            len++;
+        }
+    }
+
+    void pop() {
+        // Removes an element from the top of the stack
+        if(len==0) return;
+        q.pop();
+        len--;
+    }
+
+    int top() {
+        // Returns the top element of the stack
+        // If stack is empty, return -1
+        if(len==0) return -1;
+        else{
+            return q.front();
+        }
+    }
+
+    int size() {
+        // Returns the current size of the stack
+        return len;
+    }
+};
