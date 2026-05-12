@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        int n=nums.size();
+        int maxi=INT_MIN;
+        int maxind=0;
+        for(int i=0;i<n;i++){
+            if(maxi<nums[i]){
+                maxi=nums[i];
+                maxind=i;
+            }
+        }
+        stack<int> st;
+        vector<int> vals(n,-1);
+        for(int i=maxind;i>=0;i--){
+            while(!st.empty() && st.top()<=nums[i]){
+                st.pop();
+            }
+            
+            
+            if(!st.empty()) vals[i]=st.top();
+            
+            st.push(nums[i]);
+        }
+        for(int i=n-1;i>maxind;i--){
+             while(!st.empty() && st.top()<=nums[i]){
+                st.pop();
+            }
+            
+            
+            if(!st.empty()) vals[i]=st.top();
+            
+            st.push(nums[i]);
+        }
+        return vals;
+    }
+};
