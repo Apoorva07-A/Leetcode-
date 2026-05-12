@@ -1,0 +1,20 @@
+class Solution {
+  public:
+    string preToPost(string &s) {
+        // code here
+        stack<string> st;
+        for(int i=s.size()-1;i>=0;i--){
+            if((s[i]>='a' && s[i]<='z' ) || (s[i]>='A' && s[i]<='Z' ) || (s[i]>='0' && s[i]<='9' )){
+                st.push(string(1,s[i]));
+            }else{
+                string b=st.top();
+                st.pop();
+                string a=st.top();
+                st.pop();
+                st.push(b+a+s[i]);
+                
+            }
+        }
+        return st.top();
+    }
+};
