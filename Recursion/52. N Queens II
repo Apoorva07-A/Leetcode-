@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int ans;
+    vector<int> curr;
+    bool isvalid(int row,int col){
+        for(int i=0;i<row;i++){
+            if(curr[i]==col || abs(col-curr[i])==abs(row-i)) return false;
+        }
+        return true;
+    }
+    void func(int row,int n){
+        if(row>=n){
+            ans++;
+            return;
+
+        }
+        else{
+            for(int i=0;i<n;i++){
+                if(isvalid(row,i)){
+                    curr.push_back(i);
+                    func(row+1,n);
+                    curr.pop_back();
+                }
+            }
+        }
+    }
+        
+    
+    int totalNQueens(int n) {
+        func(0,n);
+        return ans;
+    }
+};
