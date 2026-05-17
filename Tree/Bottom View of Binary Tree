@@ -1,0 +1,42 @@
+/*
+Definition for Node
+class Node {
+public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        data = val;
+        left = right = nullptr;
+    }
+};
+*/
+
+class Solution {
+  public:
+    map<int,int> mpp;
+
+    vector<int> bottomView(Node *root) {
+        // code here
+        queue<pair<int,Node*>> q;
+        q.push({0,root});
+        while(!q.empty()){
+            int n=q.size();
+            while(n){
+                int col=q.front().first;
+                Node* curr=q.front().second;
+                q.pop();
+                mpp[col]=curr->data;
+                if(curr->left!=NULL) q.push({col-1,curr->left});
+                if(curr->right!=NULL) q.push({col+1,curr->right});
+                n--;
+            }
+        }
+        vector<int> ans;
+        for(auto& it:mpp){
+            ans.push_back(it.second);
+        }
+        return ans;
+    }
+};
