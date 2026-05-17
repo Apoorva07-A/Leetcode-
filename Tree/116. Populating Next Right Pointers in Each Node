@@ -1,0 +1,37 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* left;
+    Node* right;
+    Node* next;
+
+    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val, Node* _left, Node* _right, Node* _next)
+        : val(_val), left(_left), right(_right), next(_next) {}
+};
+*/
+
+class Solution {
+public:
+    map<int,Node*> mpp;
+    void func(int row,Node* root){
+        if(root==NULL) return;
+        if(mpp.find(row)==mpp.end()) mpp[row]=root;
+        else{
+            mpp[row]->next=root;
+            mpp[row]=root;
+        }
+        func(row+1,root->left);
+        func(row+1,root->right);
+    }
+    Node* connect(Node* root) {
+        func(0,root);
+        return root;
+        
+    }
+};
