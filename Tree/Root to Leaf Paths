@@ -1,0 +1,37 @@
+/*
+Definition for Node
+class Node {
+  public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        data = val;
+        left = right = nullptr;
+    }
+};
+*/
+
+class Solution {
+  public:
+    vector<vector<int>> ans;
+    void func(Node* root,vector<int>& curr){
+        if(root->left==NULL && root->right==NULL){
+            curr.push_back(root->data);
+            ans.push_back(curr);
+            curr.pop_back();
+            return;
+        }
+        curr.push_back(root->data);
+        if(root->left!=NULL)func(root->left,curr);
+        if(root->right!=NULL)func(root->right,curr);
+        curr.pop_back();
+    }
+    vector<vector<int>> Paths(Node* root) {
+        // code here
+        vector<int> curr;
+        func(root,curr);
+        return ans;
+    }
+};
