@@ -1,0 +1,29 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* ans;
+    int func(TreeNode* root,TreeNode* p, TreeNode* q){
+        if(root==NULL) return 0;
+        int val=0;
+        if(root==p || root==q) val=1;
+        val+=func(root->left,p,q)+func(root->right,p,q);
+        if(val==2){
+            ans=root;
+            return 0;
+        }
+        return val;
+        
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        func(root,p,q);
+        return ans;
+    }
+};
