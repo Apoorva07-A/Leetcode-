@@ -1,0 +1,45 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    unordered_map<TreeNode*,pair<TreeNode*,int>> parent;
+    vector<int> ans;
+    void func(TreeNode* root){
+        if(root==NULL) return;
+        if(root->left!=NULL){
+            parent[root->left]={root,0};
+        }
+        if(root->right!=NULL) parent[root->right]={root,0};
+        func(root->left);
+        func(root->right);
+    }
+    void traverse(TreeNode* curr,int k){
+        if(curr==NULL || parent[curr].second==1) return ;
+        if(k==0){
+            ans.push_back(curr->val);
+            return;
+        }else if(k<0){
+            return ;
+        }else{
+            parent[curr].second=1;
+            traverse(parent[curr].first,k-1);
+            traverse(curr->left,k-1);
+            traverse(curr->right,k-1);
+            parent[curr].second=0;
+        }
+
+    }
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        func(root);
+        parent[root]={NULL,0};
+        traverse(target,k);
+        return ans;
+    }
+};
