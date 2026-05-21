@@ -1,0 +1,52 @@
+/*
+class Node {
+  public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+    void inord(Node* root,vector<int>& in){
+        if(root==NULL) return;
+        inord(root->left,in);
+        in.push_back(root->data);
+        inord(root->right,in);
+    }
+    vector<int> merge(Node *root1, Node *root2) {
+        // code here
+        vector<int> in1;
+        inord(root1,in1);
+        vector<int> in2;
+        inord(root2,in2);
+        
+        int i=0,j=0;
+        vector<int> inorder;
+        while(i<in1.size() && j<in2.size()){
+            if(in1[i]<=in2[j]){
+                inorder.push_back(in1[i]);
+                i++;
+            }else{
+                inorder.push_back(in2[j]);
+                j++;
+            }
+        }
+        while(i<in1.size()){
+            inorder.push_back(in1[i]);
+                i++;
+        }
+        while(j<in2.size()){
+            inorder.push_back(in2[j]);
+                j++;
+        }
+        return inorder;
+        
+    }
+};
