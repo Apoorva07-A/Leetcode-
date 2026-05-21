@@ -1,0 +1,45 @@
+/* BST Node
+class Node {
+   public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int x){
+        data = x;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+    Node* predes=NULL;
+    Node* success=NULL;
+    void pred(Node* root,int key){
+        if(root==NULL) return ;
+        if(root->data<key){
+            predes=root;
+            pred(root->right,key);
+        }else{
+            pred(root->left,key);
+        }
+    }
+    void succ(Node* root,int key){
+        if(root==NULL ) return ;
+        if(root->data>key){
+            success=root;
+            succ(root->left,key);
+        }else{
+            succ(root->right,key);
+        }
+    }
+    
+    vector<Node*> findPreSuc(Node* root, int key) {
+        // code here
+        pred(root,key);
+        succ(root,key);
+        return {predes,success};
+    }
+};
