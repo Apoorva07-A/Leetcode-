@@ -1,0 +1,55 @@
+class Solution {
+public:
+    int num=0;
+    void merge(vector<int>& v,int left,int mid,int right){
+        vector<int> leftv(v.begin()+left,v.begin()+mid+1);
+        vector<int> rightv(v.begin()+mid+1,v.begin()+right+1);
+
+        
+        int j = 0;
+
+        for(int i = 0; i < leftv.size(); i++) {
+
+            while(j < rightv.size() && leftv[i] > 2LL * rightv[j]) {
+            j++;
+            }
+
+            num += j;
+        }
+        int i=0,k=left;
+        j=0;
+        while(i<leftv.size() && j<rightv.size()){
+            if(leftv[i]<=rightv[j]){
+                v[k]=leftv[i];
+                i++;
+            }else{
+                
+                v[k]=rightv[j];
+                j++;
+            }
+            k++;
+        }
+        while(i<leftv.size()){
+            v[k]=leftv[i];
+            i++;
+            k++;
+        }
+        while(j<rightv.size()){
+            v[k]=rightv[j];
+                j++;
+                 k++;
+        }
+    }
+    void mergeSort(vector<int>& v,int left,int right){
+        if(left>=right) return ;
+        int mid=left+(right-left)/2;
+        
+        mergeSort(v,left,mid);
+        mergeSort(v,mid+1,right);
+        merge(v,left,mid,right);
+    }
+    int reversePairs(vector<int>& nums) {
+        mergeSort(nums,0,nums.size()-1);
+        return num;
+    }
+};
