@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        vector<vector<int>> dir={{0,1},{0,-1},{1,0},{-1,0}};
+        if(image[sr][sc]== color) return image;
+        queue<vector<int>> q;
+        int org=image[sr][sc];
+        q.push({sr,sc});
+        image[sr][sc]=color;
+        while(!q.empty()){
+            vector<int> curr=q.front();
+            q.pop();
+            for(int i=0;i<4;i++){
+                int row=curr[0]+dir[i][0];
+                int col=curr[1]+dir[i][1];
+                if(row<image.size() && row>=0 && col>=0 && col<image[0].size() && image[row][col]==org){
+                    image[row][col]=color;
+                    q.push({row,col});
+                }
+            }
+        }
+        return image;
+    }
+};
