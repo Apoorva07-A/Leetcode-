@@ -1,0 +1,41 @@
+class Solution {
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        int m=mat.size();
+        int n=mat[0].size();
+        vector<vector<int>> ans(m,vector<int> (n,INT_MAX));
+        vector<vector<int>> dir={{0,-1},{0,1},{-1,0},{1,0}};
+        vector<vector<bool>> vis(m,vector<bool>(n,0));
+        queue<vector<int>> q;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(!mat[i][j]){
+                    q.push({i,j});
+                    vis[i][j]=true;
+                    ans[i][j]=0;
+                }
+            }
+        }
+
+        int dist=0;
+        while(!q.empty()){
+            int n1=q.size();
+            dist++;
+            while(n1){
+                vector<int> curr=q.front();
+                q.pop();
+                n1--;
+                for(int k=0;k<4;k++){
+                    int row=curr[0]+dir[k][0];
+                    int col=curr[1]+dir[k][1];
+                    if(row>=0 && row<m && col>=0 && col<n && !vis[row][col]){
+                        ans[row][col]=dist;
+                        vis[row][col]=true;
+                        q.push({row,col});
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
