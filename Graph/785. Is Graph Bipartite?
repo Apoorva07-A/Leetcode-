@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n=graph.size();
+        vector<int> group(n,0);
+
+        queue<int> q;
+        
+        for(int j=0;j<graph.size();j++){
+            if(group[j]==0){
+                q.push(j);
+                group[j]=1;
+            }
+        
+            while(!q.empty()){
+                int curr=q.front();
+                q.pop();
+                for(int i=0;i<graph[curr].size();i++){
+                    if(group[graph[curr][i]]==0){
+                        if(group[curr]==1) group[graph[curr][i]]=2;
+                        else group[graph[curr][i]]=1;
+                        q.push(graph[curr][i]);
+                    }else{
+                        if(group[curr]==group[graph[curr][i]]) return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+};
