@@ -1,0 +1,59 @@
+class Solution {
+  public:
+    string findOrder(vector<string> &words) {
+        // code here
+        vector<int> indegree(26,-1);
+        vector<vector<int>> adj(26,vector<int>{});
+        
+        for(int i=0;i<words.size();i++){
+            for(char c:words[i]){
+                indegree[c-'a']=0;
+            }
+        }
+        
+        for(int i=0;i<words.size()-1;i++){
+            int j=0;
+            int diff=0;
+            while(j<min(words[i].size(),words[i+1].size())){
+                if(words[i][j]!=words[i+1][j]){
+                    diff=1;
+                    adj[words[i][j]-'a'].push_back(words[i+1][j]-'a');
+                    indegree[words[i+1][j]-'a']++;
+                    break;
+                }
+                j++;
+            }
+            if(words[i+1].size()<words[i].size() && diff==0) return "";
+        }
+        
+        queue<int> q;
+        string order="";
+        int n=0;
+        for(int i=0;i<26;i++){
+            if(indegree[i]>=0) n++;
+            if(indegree[i]==0){
+                q.push(i);
+            }
+        }
+        
+        while(!q.empty()){
+            int curr=q.front();
+            q.pop();
+            order+=char(curr+'a');
+            for(int i=0;i<adj[curr].size();i++){
+                indegree[adj[curr][i]]--;
+                if(indegree[adj[curr][i]]==0){
+                    q.push(adj[curr][i]);
+                }
+            }
+        }
+        
+        
+    
+        if(order.size()<n) return "";
+        return order;
+        
+              
+        
+    }
+};
