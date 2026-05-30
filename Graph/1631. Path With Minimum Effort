@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int minimumEffortPath(vector<vector<int>>& h) {
+        int n=h[0].size();
+        int m=h.size();
+        vector<vector<int>> effort(m,vector<int> (n,INT_MAX));
+
+        set<vector<int>> st;
+        vector<vector<int>> dir={{-1,0},{1,0},{0,-1},{0,1}};
+
+        st.insert({0,0,0});
+        effort[0][0]=0;
+        while(st.size()>0){
+            int curreffort=(*st.begin())[0];
+            int currx=(*st.begin())[1];
+            int curry=(*st.begin())[2];
+            st.erase(st.begin());
+            for(int i=0;i<4;i++){
+                int x=currx+dir[i][0];
+                int y=curry+dir[i][1];
+                if(x>=0 && x<m && y>=0 && y<n ){
+                    if(effort[x][y]>max(curreffort,abs(h[currx][curry]-h[x][y]))){
+                        if(effort[x][y]!=INT_MAX){
+                            st.erase({effort[x][y],x,y});
+                        }
+                        effort[x][y]=max(curreffort,abs(h[currx][curry]-h[x][y]));
+                        st.insert({effort[x][y],x,y});
+                    }
+                }
+            }
+        }
+        return effort[m-1][n-1];
+
+    }
+};
