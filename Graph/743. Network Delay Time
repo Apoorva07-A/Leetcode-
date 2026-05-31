@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& t, int n, int k) {
+        vector<vector<vector<int>>> adj(n+1);
+
+        for(int i=0;i<t.size();i++){
+            adj[t[i][0]].push_back({t[i][1],t[i][2]});
+        }
+        vector<int> dist(n+1,INT_MAX);
+        dist[k]=0;
+        set<vector<int>> st;
+        st.insert({0,k});
+
+        while(st.size()>0){
+            int currdist=(*st.begin())[0];
+            int curr=(*st.begin())[1];
+            st.erase(st.begin());
+            for(int i=0;i<adj[curr].size();i++){
+                if(dist[adj[curr][i][0]]>currdist+adj[curr][i][1]){
+                    if(dist[adj[curr][i][0]]!=INT_MAX) st.erase({dist[adj[curr][i][0]],adj[curr][i][0]});
+                    dist[adj[curr][i][0]]=currdist+adj[curr][i][1];
+                    st.insert({dist[adj[curr][i][0]],adj[curr][i][0]});
+                }
+
+            }
+        }
+        int maxtime=0;
+
+        for(int i=1;i<n+1;i++){
+           
+            maxtime=max(maxtime,dist[i]);
+        }
+        if(maxtime==INT_MAX) return -1;
+        return maxtime;
+    }
+};
