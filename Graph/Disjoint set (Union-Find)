@@ -1,0 +1,35 @@
+class Solution {
+  public:
+    vector<int> parent;
+    vector<int> rank;
+    
+    int findParent(int u){
+        if(parent[u]==u) return u;
+        return parent[u]=findParent(parent[u]);
+    }
+    void unionmerge(int u,int v){
+        int upu=findParent(u),upv=findParent(v);
+        
+        
+            parent[upu]=upv;
+        
+        
+    }
+    vector<int> DSU(int n, vector<vector<int>>& queries) {
+        // code here
+        parent.resize(n+1,0);
+        rank.resize(n+1,0);
+        for(int i=0;i<n+1;i++){
+            parent[i]=i;
+        }
+        vector<int> ans;
+        for(int i=0;i<queries.size();i++){
+            if(queries[i][0]==2){
+                ans.push_back(findParent(queries[i][1]));
+            }else{
+                unionmerge(queries[i][1],queries[i][2]);
+            }
+        }
+        return ans;
+    }
+};
