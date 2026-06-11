@@ -1,0 +1,23 @@
+class Solution {
+public:
+
+    void nextPermutation(vector<int>& nums) {
+        int n=nums.size();
+        int ind=n-1;
+       
+             while(ind>0 && nums[ind]<=nums[ind-1]) ind--;
+    
+        if(ind==0){
+            reverse(nums.begin(),nums.end());
+            return;
+        }else{
+            int pt=ind;
+            while(pt<n  && nums[pt]>nums[ind-1]){
+                pt++;
+            }
+            swap(nums[ind-1],nums[pt-1]);
+            sort(nums.begin()+ind,nums.end());
+        }
+          
+    }
+};
