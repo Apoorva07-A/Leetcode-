@@ -1,0 +1,28 @@
+class Solution {
+  public:
+    int longestSubarray(vector<int>& nums, int k) {
+        // code here
+        unordered_map<int,int> mpp;
+        int maxsize=0;
+        if(nums[0]==k) maxsize=1;
+        mpp[nums[0]]=0;
+        for(int i=1;i<nums.size();i++){
+            
+            nums[i]=nums[i]+nums[i-1];
+            if(mpp.find(nums[i])==mpp.end()) mpp[nums[i]]=i;
+            if(nums[i]==k) {
+              
+                maxsize=i+1;
+                
+            }else{
+                if(mpp.find(nums[i]-k)!=mpp.end()){
+                   
+                    maxsize=max(maxsize,i-mpp[nums[i]-k]);
+                   
+                }
+            }
+        }
+        return maxsize;
+        
+    }
+};
