@@ -1,0 +1,45 @@
+class Solution {
+  public:
+    // int func(int ind,int target,vector<int> & arr,vector<vector<int>> & dp){
+    //     if(dp[ind][target]!=-1) return dp[ind][target];
+    //     if(ind==0){
+    //         if(target==0) return dp[ind][target]=1;
+    //         else return dp[ind][target]=0;
+    //     }else{
+    //         int nottake=func(ind-1,target,arr,dp),take=0;
+    //         if(target>=arr[ind-1]){
+    //             take=func(ind-1,target-arr[ind-1],arr,dp);
+    //         }
+    //         return dp[ind][target]=take+nottake;
+    //     }
+    // }
+    int perfectSum(vector<int>& arr, int target) {
+        // code here
+        int n=arr.size();
+        
+        
+        vector<vector<int>> dp(n+1,vector<int> (target+1,-1));
+        
+        for(int j=0;j<target+1;j++){
+            dp[0][j]=0;
+        }
+        dp[0][0]=1;
+        
+        for(int i=0;i<n+1;i++){
+            
+            for(int j=0;j<target+1;j++){
+                if(dp[i][j]!=-1) continue;
+                int nottake=dp[i-1][j],take=0;
+                if(j>=arr[i-1]){
+                    take=dp[i-1][j-arr[i-1]];
+                }
+                dp[i][j]=take+nottake;
+            }
+        }
+        
+        
+        
+        
+        return dp[n][target];
+    }
+};
