@@ -1,0 +1,26 @@
+class Solution {
+  public:
+    int sum;
+    vector<vector<int>> dp;
+   
+    int countPartitions(vector<int>& arr, int diff) {
+        // Code here
+        sum=accumulate(arr.begin(),arr.end(),0);
+        int n=arr.size();
+        dp.resize(n+1,vector<int> (sum+1,-1));
+        
+        for(int j=0;j<sum+1;j++){
+            if(j-(sum-j)==diff ) dp[0][j]=1;
+            else dp[0][j]=0;
+        }
+        
+        for(int i=1;i<n+1;i++){
+            for(int j=0;j<sum+1;j++){
+                if(dp[i][j]!=-1) continue;
+                dp[i][j]=dp[i-1][j]+dp[i-1][j-arr[i-1]];
+            }
+        }
+        return dp[n][sum];
+        
+    }
+};
