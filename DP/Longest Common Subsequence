@@ -1,0 +1,42 @@
+class Solution {
+  public:
+  
+    // int func(int i , int j, string& s1, string& s2){
+    //     if(i==0 || j==0){
+    //          return 0;
+    //     }
+    //     int nottake=max(func(i-1,j,s1,s2),func(i,j-1,s1,s2));
+        
+    //     if(s1[i-1]==s2[j-1]){
+    //         int take=0;
+    //         take=func(i-1,j-1,s1,s2)+1;
+    //         return max(take,nottake);
+    //     }else{
+    //         return nottake;
+    //     }
+    // }
+    int lcs(string &s1, string &s2) {
+        // code here
+        int n1=s1.size();
+        int n2=s2.size();
+        vector<vector<int>> dp(n1+1,vector<int> (n2+1,-1));
+        for(int i=0;i<n1+1;i++){
+            for(int j=0;j<n2+1;j++){
+                if(i==0 || j==0){
+                    dp[i][j]=0;
+                    continue;
+                }
+                int nottake=max(dp[i-1][j],dp[i][j-1]);
+        
+                if(s1[i-1]==s2[j-1]){
+                    int take=0;
+                    take=dp[i-1][j-1]+1;
+                    dp[i][j]=max(take,nottake);
+                }else{
+                    dp[i][j]=nottake;
+                }
+            }
+        }
+        return dp[n1][n2];
+    }
+};
