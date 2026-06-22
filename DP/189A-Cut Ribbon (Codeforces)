@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+// int maxpcs(int ind,int len,vector<int>& v){
+//     if(ind==0){
+//         if(len==0) return 0;
+//         else return INT_MIN;
+//     }
+//     int nottake=maxpcs(ind-1,len,v),take=INT_MIN;
+//     if(len>=v[ind-1]){
+//         take=maxpcs(ind,len-v[ind-1],v)+1;
+//     }
+//     return max(take,nottake);
+// }
+int main(){
+    int len;
+    cin>>len;
+    vector<int> v;
+    for(int i=0;i<3;i++){
+        int x;
+        cin>>x;
+        v.push_back(x);
+
+    }
+    vector<vector<int>> dp(4,vector<int>(len+1,-1));
+
+    for(int i=0;i<4;i++){
+        for(int j=0;j<len+1;j++){
+            if(i==0){
+                if(j==0) dp[i][j]=0;
+                else dp[i][j]=INT_MIN;
+            }
+            if(dp[i][j]!=-1) continue;
+            int nottake=dp[i-1][j],take=INT_MIN;
+            if(j>=v[i-1]){
+                take=dp[i][j-v[i-1]]+1;
+            }
+            dp[i][j]=max(take,nottake);
+        }
+    }
+    cout<<dp[3][len];
+
+}
