@@ -1,0 +1,29 @@
+class Solution {
+public:
+
+    int coinChange(vector<int>& coins, int amount) {
+        int n=coins.size();
+
+        vector<int> dp(amount+1,-1);
+
+        for(int i=0;i<n+1;i++){
+            for(int j=0;j<amount+1;j++){
+                if(i==0){
+
+                    if(j==0) dp[j]=0;
+                    else dp[j]=INT_MAX;
+
+                }else{
+
+                    if(j>=coins[i-1] && dp[j-coins[i-1]]!=INT_MAX ){
+                        dp[j]=min(dp[j],dp[j-coins[i-1]]+1);
+
+                    }else{
+                        dp[j]=dp[j];
+                    }
+                }
+            }
+        }
+        return (dp[amount] == INT_MAX)?-1:dp[amount];
+    }
+};
