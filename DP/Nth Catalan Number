@@ -1,0 +1,30 @@
+class Solution {
+  public:
+    // Function to find the nth catalan number.
+    // int func(int open, int close){
+    //     if(open==0 && close==0){
+    //         return 1;
+    //     }
+    //     int a=0,b=0;
+    //     if(open>0) a=func(open-1,close);
+    //     if(close>open) b=func(open,close-1);
+    //     return a+b;
+    // }
+    int findCatalan(int n) {
+        // code here
+        vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+        for(int i=0;i<n+1;i++){
+            for(int j=0;j<n+1;j++){
+                if(i==0 && j==0){
+                    dp[i][j]=1;
+                    continue;
+                }
+                int a=0,b=0;
+                if(i>0) a=dp[i-1][j];
+                if(j>i) b=dp[i][j-1];
+                dp[i][j]=a+b;
+            }
+        }
+        return  dp[n][n];
+    }
+};
