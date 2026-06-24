@@ -1,0 +1,41 @@
+class Solution {
+  public:
+    string scs(int i,int j,string & s1,string & s2){
+        if(i==0){
+            string ans=s2.substr(0,j);
+            return ans;
+        }else if(j==0){
+            string ans=s1.substr(0,i);
+            return ans;
+        }else{
+            string ith=scs(i-1,j,s1,s2)+s1[i-1];
+            string jth=scs(i,j-1,s1,s2)+s2[j-1];
+            string choice=(ith.size()<=jth.size())?ith:jth;
+            if(s1[i-1]==s2[j-1]){
+                string select=scs(i-1,j-1,s1,s2)+s1[i-1];
+                return (select.size()<=choice.size())?select:choice;
+            }else return choice;
+        }
+    }
+    string minSuperSeq(string &a, string &b) {
+        // code here
+        string s1,s2;
+        
+        if(a.size()>=b.size()){
+            s1=a;
+            s2=b;
+        }else{
+            s1=b;
+            s2=a;
+        }
+        
+        int n1=s1.size(),n2=s2.size();
+        
+        
+        return scs(n1,n2,s1,s2);
+        
+        
+        
+        
+    }
+};
